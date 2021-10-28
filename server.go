@@ -8,9 +8,11 @@ import (
 )
 
 type TopUPInput struct {
-	Name     string
-	Amount   int
-	WalletID int
+	// validation JSON required or not
+	//if you want learn more about tag binding go https://pkg.go.dev/github.com/go-playground/validator/v10@v10.9.0#section-readme
+	Name     string `json:"Name" binding:"required"`
+	Amount   int    `json:"Amount" binding:"required,number"`
+	WalletID string `json:"WalletID" binding:"required"`
 }
 
 func main() {
@@ -54,7 +56,10 @@ func topupHandler(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&topUpInput)
 	if err != nil {
-		log.Fatal(err)
+		c.JSON(http.StatusBadRequest, err)
+		log.Println(err)
+		return
+
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"WalletID": topUpInput.WalletID,
