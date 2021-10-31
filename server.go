@@ -7,10 +7,12 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.GET("/ping", handlers.Pong)
+	v1 := r.Group("/v1")
+
+	v1.GET("/ping", handlers.Pong)
 	r.GET("/signup/:age", handlers.SignupHandler)
 	r.GET("/query", handlers.QueryHandler)
-	r.POST("/top-up", handlers.TopupHandler)
+	v1.POST("/top-up", handlers.TopupHandler)
 
 	r.Run(":8888")
 }
