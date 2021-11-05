@@ -14,7 +14,8 @@ import (
 )
 
 func main() {
-	config, err := util.LoadConfig(".")
+	// load viper config
+	config, err := util.LoadConfig("/home/maiing/Documents/web-go/web-api")
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
